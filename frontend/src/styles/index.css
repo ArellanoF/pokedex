@@ -1,0 +1,15 @@
+
+@font-face {
+    font-family: pokemon;
+    src: url('/assets/fonts/pokemon_solid.ttf');
+  }
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
