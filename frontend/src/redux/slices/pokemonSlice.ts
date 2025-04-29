@@ -90,9 +90,13 @@ const pokemonSlice = createSlice({
             .addCase(createNewPokemon.fulfilled, (state, action) => {
                 state.loading = false;
                 state.createdPokemon = action.payload.data;
-                // Opcionalmente, también podemos añadir el Pokémon creado al array de datos
+            
                 if (action.payload.data) {
+                    // Añade al final de `data` como ya hacías
                     state.data = [...state.data, action.payload.data];
+            
+                    // ✅ Añade al PRINCIPIO de `heaviestPokemons`
+                    state.heaviestPokemons = [action.payload.data, ...state.heaviestPokemons];
                 }
             })
             .addCase(createNewPokemon.rejected, (state, action) => {
