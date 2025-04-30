@@ -1,4 +1,4 @@
-import PokedexScreenWrapper from "./pokedexScreen.style";
+import PokedexScreenWrapper from "../../styles/pokedexScreen.style";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store"; 
@@ -11,7 +11,7 @@ import { CardContainer,
   PokemonInfo,
   PokemonName,
   PokemonDetails,
-  PokedexFooter } from "./pokedexCardScreen.style";
+  PokedexFooter } from "../../styles/pokedexCardScreen.style";
 import { usePokemonForm } from "../../hooks/usePokemonForm";
 
 // Componente de la tarjeta de Pokémon
@@ -64,12 +64,7 @@ const PokedexScreen = () => {
     setTimeout(() => alert('¡Pokémon creado exitosamente!'), 10);
   };
 
-  const handleError = (msg: string) => {
-    setShowAddModal(false);
-    setTimeout(() => alert(`Error: ${msg}`), 10);
-  };
-
-  const { formData, handleInputChange, handleSubmit } = usePokemonForm(handleSuccess, handleError);
+  const { formData, handleInputChange, handleSubmit } = usePokemonForm(handleSuccess);
 
   return (
     <PokedexScreenWrapper>

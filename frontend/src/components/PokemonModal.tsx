@@ -14,7 +14,7 @@ import {
     ButtonGroup,
     CancelButton,
     SaveButton,
-} from './pokemonModal.style';
+} from '../styles/pokemonModal.style';
 import { PokemonModalProps } from '../interfaces/pokemonInterface';
 
 // Componente del Modal
