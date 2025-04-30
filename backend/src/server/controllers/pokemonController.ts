@@ -13,7 +13,6 @@ const getHeaviestPokemons = async (req: Request, res: Response) => {
       order: [['weight', 'DESC']],
       limit: 25,
     });
-    console.log(heaviestPokemons)
     // Si no hay Pokémon registrados, devolvemos un mensaje
     if (heaviestPokemons.length === 0) {
       return res.status(404).json({ 
@@ -38,13 +37,14 @@ const getHeaviestPokemons = async (req: Request, res: Response) => {
  * @param {Response} res - Objeto de respuesta Express
  */
 const createPokemon = async (req: Request, res: Response) => {
+
   try {
     const { name, url, weight, height, number, health } = req.body;
     // Validamos que se proporcionen los campos requeridos
-    if (!name || !weight || !height) {
+    if (!number || !weight || !height || !health) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Se requieren los campos: name, weight y height' 
+        message: 'Los campos: Peso, Altura , Número y Salud deben ser mayor a 0' 
       });
     }
     

@@ -7,7 +7,7 @@ import { connectToDatabase, db } from "./config/db";
 import * as dotenv from "dotenv";
 import path from "path";
 
-import exampleRoutes from "./routes/exampleRoutes";
+import pokemonRoutes from "./routes/pokemonRoutes";
 
 dotenv.config({ path: path.resolve(__dirname, "../..", ".env") });
 
@@ -30,7 +30,7 @@ const initializeServer = (port: number): void => {
 
 app.use(cors());
 app.use(express.json());
-app.use(exampleRoutes);
+app.use(pokemonRoutes);
 
 
 export default initializeServer;

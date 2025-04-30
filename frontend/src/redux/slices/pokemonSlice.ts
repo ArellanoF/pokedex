@@ -1,4 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { PokemonState } from '../../interfaces/pokemonInterface';
+import { Pokemon } from '../../interfaces/pokemonInterface';
+
 // Acción asíncrona para obtener los Pokémon más pesados del backend
 export const fetchHeaviestPokemons = createAsyncThunk('pokemons/fetchHeaviestPokemons', async () => {
     const response = await fetch('http://localhost:7768/pokemons/heaviest'); 
@@ -7,14 +10,13 @@ export const fetchHeaviestPokemons = createAsyncThunk('pokemons/fetchHeaviestPok
     }
 
     const json = await response.json();
-    console.log(json.data);
     return json.data; // 👈 Solo retorna el array que necesitas
 });
 
 // Acción asíncrona para crear un nuevo Pokémon
 export const createNewPokemon = createAsyncThunk(
     'pokemon/createNewPokemon',
-    async (pokemonData: any) => {
+    async (pokemonData: Pokemon) => {
         const response = await fetch('http://localhost:7768/pokemon/create', {
             method: 'POST',
             headers: {
@@ -22,33 +24,18 @@ export const createNewPokemon = createAsyncThunk(
             },
             body: JSON.stringify(pokemonData),
         });
-        
-        if (!response.ok) {
-            throw new Error('Error al crear el Pokémon');
-        }
-        
         const data = await response.json();
+        if (!response.ok) {
+            // 👈 Aquí es donde se captura y lanza el mensaje del backend
+            throw new Error(data.message || 'Error al crear el Pokémon');
+          }
+        
+        
         return data; 
       
     }
 );
-export interface Pokemon {
-    id: number;
-    name: string;
-    height: number;
-    number: number;
-    health: number;
-    weight: number;
-    url: string;
-  }
 
-interface PokemonState {
-    data: any[];
-    loading: boolean;
-    error: string | null;
-    createdPokemon: any | null;
-    heaviestPokemons: Pokemon[];
-}
 
 const initialState: PokemonState = {
     data: [],
@@ -92,7 +79,6 @@ const pokemonSlice = createSlice({
                 state.createdPokemon = action.payload.data;
             
                 if (action.payload.data) {
-                    // Añade al final de `data` como ya hacías
                     state.data = [...state.data, action.payload.data];
             
                     // ✅ Añade al PRINCIPIO de `heaviestPokemons`
@@ -108,3 +94,4 @@ const pokemonSlice = createSlice({
 
 export const { clearCreatedPokemon } = pokemonSlice.actions;
 export default pokemonSlice.reducer;
+
